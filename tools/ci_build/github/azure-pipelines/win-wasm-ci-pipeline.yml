@@ -123,7 +123,7 @@ jobs:
 
 - job: build_onnxruntime_web
   dependsOn: build_WASM
-  pool: 'chasuntest1'
+  pool: 'yulongtest'
   strategy:
     maxParallel: 2
     matrix:

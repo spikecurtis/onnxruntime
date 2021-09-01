@@ -23,9 +23,9 @@ jobs:
   strategy:
     maxParallel: 4
     matrix:
-      'debug':
-        BuildConfig: 'Debug'
-        CmdParams: ''
+      # 'debug':
+      #   BuildConfig: 'Debug'
+      #   CmdParams: ''
       'release':
         BuildConfig: 'Release'
         CmdParams: '--skip_tests --disable_wasm_exception_catching --disable_rtti'
@@ -123,12 +123,12 @@ jobs:
 
 - job: build_onnxruntime_web
   dependsOn: build_WASM
-  pool: 'Win-CPU-2019'
+  pool: 'chasuntest1'
   strategy:
     maxParallel: 2
     matrix:
-      'debug':
-        BuildConfig: 'Debug'
+      # 'debug':
+      #   BuildConfig: 'Debug'
       'release':
         BuildConfig: 'Release'
 

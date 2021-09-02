@@ -215,11 +215,11 @@ jobs:
     workingDirectory: '$(Build.SourcesDirectory)\js\web'
     displayName: 'Build ort-web'
   - script: |
-     npm test
+     npm test -- -e=edge
     workingDirectory: '$(Build.SourcesDirectory)\js\web'
     displayName: 'Run ort-web tests - unpacked mode'
   - script: |
-     npm test --  --webgl-texture-pack-mode -b=webgl
+     npm test -- -e=edge --webgl-texture-pack-mode -b=webgl
     workingDirectory: '$(Build.SourcesDirectory)\js\web'
     displayName: 'Run ort-web tests - packed mode'
   - script: |

@@ -139,8 +139,8 @@
           Pack="true"
           Visible="false"
     />
-    <None Include="targets\netstandard\$(PackageId).targets"
-          PackagePath="build\netstandard1.1\$(PackageId).targets;build\netstandard2.0\$(PackageId).targets"
+    <None Include="$(PackageId).targets" 
+          PackagePath="\build\$(TargetFramework)"
           Pack="true"
           Visible="false" 
     />
@@ -162,26 +162,26 @@
 
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework.StartsWith('netstandard'))">
-    <PackageReference Include="System.Memory" Version="4.5.3" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
-
   <ItemGroup>
-    <LicenseFile Include="$(OnnxRuntimeCsharpRoot)\..\LICENSE" Visible="false" />
-    <TargetsFile Include="$(OnnxRuntimeCsharpRoot)\src\Microsoft.ML.OnnxRuntime\targets\netstandard\targets.xml" Visible="false" />
+    <LicenseFile Include="$(OnnxRuntimeCsharpRoot)\..\LICENSE" />
+    <TargetsFile Include="$(OnnxRuntimeCsharpRoot)\src\Microsoft.ML.OnnxRuntime\targets.xml" />
   </ItemGroup>
 
-  <Target Name="CopyMiscFiles" BeforeTargets="PreBuildEvent">
+  <Target Name="CopyMiscFiles" BeforeTargets="Pack">
     <Copy SourceFiles="@(LicenseFile)" DestinationFiles="@(LicenseFile->'$(OnnxRuntimeCsharpRoot)\..\%(Filename).txt')" />
-    <Copy SourceFiles="@(TargetsFile)" DestinationFiles="@(TargetsFile->'$(OnnxRuntimeCsharpRoot)\src\Microsoft.ML.OnnxRuntime\targets\netstandard\$(PackageId).targets')" />
+    <Copy SourceFiles="@(TargetsFile)" DestinationFiles="@(TargetsFile->'$(OnnxRuntimeCsharpRoot)\src\\Microsoft.ML.OnnxRuntime\$(PackageId).targets')" />
   </Target>
 
-    <Target Name="CopyPackage" AfterTargets="Pack">
-      <Copy
+  <Target Name="CopyPackage" AfterTargets="Pack">
+  <Copy
     SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg"
-        DestinationFolder="$(NativeBuildOutputDir)\nuget-artifacts"
-      />
-    </Target>
-  
+    DestinationFolder="$(NativeBuildOutputDir)\nuget-artifacts"
+    />
+</Target>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="System.Memory" Version="4.5.3" />
+  </ItemGroup>
+
 </Project>

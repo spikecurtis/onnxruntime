@@ -214,22 +214,25 @@ jobs:
      npm run build
     workingDirectory: '$(Build.SourcesDirectory)\js\web'
     displayName: 'Build ort-web'
-  # - script: |
-  #    npm test
-  #   workingDirectory: '$(Build.SourcesDirectory)\js\web'
-  #   displayName: 'Run ort-web tests - unpacked mode chrome'
-  # - script: |
-  #    npm test -- --webgl-texture-pack-mode -b=webgl
-  #   workingDirectory: '$(Build.SourcesDirectory)\js\web'
-  #   displayName: 'Run ort-web tests - packed mode chrome'
+  - script: |
+     npm test
+    workingDirectory: '$(Build.SourcesDirectory)\js\web'
+    displayName: 'Run ort-web tests - unpacked mode'
+  - script: |
+     npm test -- --webgl-texture-pack-mode -b=webgl
+    workingDirectory: '$(Build.SourcesDirectory)\js\web'
+    displayName: 'Run ort-web tests - packed mode'
+    condition: always()
   - script: |
      npm test -- -e=edge
     workingDirectory: '$(Build.SourcesDirectory)\js\web'
     displayName: 'Run ort-web tests - unpacked mode'
+    condition: always()
   - script: |
      npm test -- -e=edge --webgl-texture-pack-mode -b=webgl
     workingDirectory: '$(Build.SourcesDirectory)\js\web'
     displayName: 'Run ort-web tests - packed mode'
+    condition: always()
   - script: |
       npm pack
     workingDirectory: '$(Build.SourcesDirectory)\js\common'
@@ -268,6 +271,6 @@ jobs:
   - template: templates/component-governance-component-detection-steps.yml
     parameters :
       condition : 'succeeded'
-  # - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
-  #   displayName: 'Clean Agent Directories'
-  #   condition: always()
+  - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
+    displayName: 'Clean Agent Directories'
+    condition: always()

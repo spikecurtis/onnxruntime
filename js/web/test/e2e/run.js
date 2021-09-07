@@ -9,6 +9,10 @@ const globby = require('globby');
 const { spawn } = require('child_process');
 const startServer = require('./simple-http-server');
 
+// set browser from commandline args
+const args = require('minimist')(process.argv.slice(2));
+const BROWSER = args['e'] || 'Chrome_default';
+
 // copy whole folder to out-side of <ORT_ROOT>/js/ because we need to test in a folder that no `package.json` file
 // exists in its parent folder.
 // here we use <ORT_ROOT>/build/js/e2e/ for the test
@@ -83,11 +87,11 @@ async function testAllNodejsCases() {
 }
 
 async function testAllBrowserCases({ hostInKarma }) {
-  await runKarma({ hostInKarma, main: './browser-test-webgl.js', browser: 'Chrome_default' });
-  await runKarma({ hostInKarma, main: './browser-test-wasm.js', browser: 'Chrome_default' });
-  await runKarma({ hostInKarma, main: './browser-test-wasm-no-threads.js', browser: 'Chrome_default' });
-  await runKarma({ hostInKarma, main: './browser-test-wasm-path-override-filename.js', browser: 'Chrome_default' });
-  await runKarma({ hostInKarma, main: './browser-test-wasm-path-override-prefix.js', browser: 'Chrome_default' });
+  await runKarma({ hostInKarma, main: './browser-test-webgl.js', browser: BROWSER });
+  await runKarma({ hostInKarma, main: './browser-test-wasm.js', browser: BROWSER });
+  await runKarma({ hostInKarma, main: './browser-test-wasm-no-threads.js', browser: BROWSER });
+  await runKarma({ hostInKarma, main: './browser-test-wasm-path-override-filename.js', browser: BROWSER });
+  await runKarma({ hostInKarma, main: './browser-test-wasm-path-override-prefix.js', browser: BROWSER });
 }
 
 async function runKarma({ hostInKarma, main, browser }) {

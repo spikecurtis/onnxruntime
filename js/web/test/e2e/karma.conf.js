@@ -39,15 +39,30 @@ module.exports = function (config) {
     browserDisconnectTolerance: 0,
     browserSocketTimeout: 60000,
     hostname: 'localhost',
+    plugins: [
+      require('karma-chrome-launcher'),
+      require('@chiragrupani/karma-chromium-edge-launcher'),
+    ],
     browsers: [],
     customLaunchers: {
       Chrome_default: {
         base: 'Chrome',
+        flags: ['--no-first-run'],
         chromeDataDir: USER_DATA
       },
       Chrome_no_threads: {
         base: 'Chrome',
+        flags: ['--no-first-run'],
         chromeDataDir: USER_DATA,
+        // TODO: no-thread flags
+      },
+      Edge_default: {
+        base: 'Edge',
+        flags: ['--no-first-run', `--user-data-dir=${USER_DATA}`]
+      },
+      Edge_no_threads: {
+        base: 'Edge',
+        flags: ['--no-first-run', `--user-data-dir=${USER_DATA}`]
         // TODO: no-thread flags
       }
     }

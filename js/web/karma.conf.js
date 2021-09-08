@@ -37,6 +37,7 @@ function getMachineIpAddress() {
 
 module.exports = function (config) {
   config.set({
+    logLevel: config.LOG_DEBUG,
     // global config of your BrowserStack account
     browserStack: {
       username: process.env.BROWSERSTACK_USERNAME,
